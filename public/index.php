@@ -1,7 +1,7 @@
 <?php
 
 use App\Kernel;
-use Symfony\Component\Debug\Debug;
+use Symfony\Component\ErrorHandler\Debug;
 use Symfony\Component\Dotenv\Dotenv;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -34,6 +34,7 @@ if ($trustedHosts = $_SERVER['TRUSTED_HOSTS'] ?? $_ENV['TRUSTED_HOSTS'] ?? false
 
 $kernel = new Kernel($env, $debug);
 $request = Request::createFromGlobals();
+/** @noinspection PhpUnhandledExceptionInspection */
 $response = $kernel->handle($request);
 $response->send();
 $kernel->terminate($request, $response);

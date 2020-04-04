@@ -34,7 +34,7 @@ services:
             $clientRepository: '@App\Infrastructure\OAuth2Server\Bridge\ClientRepository'
             $accessTokenRepository: '@App\Infrastructure\OAuth2Server\Bridge\AccessTokenRepository'
             $scopeRepository: '@App\Infrastructure\OAuth2Server\Bridge\ScopeRepository'
-            $privateKey: '%env(OAUTH2_PRIVATE_KEY)%'
+            $privateKey: '%env(resolve:OAUTH2_PRIVATE_KEY)%'
             $encryptionKey: '%env(OAUTH2_ENCRYPTION_KEY)%'
 
     League\OAuth2\Server\Grant\PasswordGrant:
@@ -45,4 +45,4 @@ services:
     League\OAuth2\Server\ResourceServer:
         arguments:
             $accessTokenRepository: '@App\Infrastructure\OAuth2Server\Bridge\AccessTokenRepository'
-            $publicKey: '%env(OAUTH2_PUBLIC_KEY)%'
+            $publicKey: '%env(resolve:OAUTH2_PUBLIC_KEY)%'

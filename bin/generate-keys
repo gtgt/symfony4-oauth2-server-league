@@ -1,0 +1,5 @@
+#!/bin/bash
+mkdir -p config/cert
+openssl genrsa -out config/cert/private.key 2048
+openssl rsa -in config/cert/private.key -pubout > config/cert/public.crt
+chmod 600 config/cert/*

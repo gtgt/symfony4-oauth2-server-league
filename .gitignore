@@ -1,3 +1,5 @@
+.env.local
+config/cert/*
 
 ###> symfony/framework-bundle ###
 /.env
