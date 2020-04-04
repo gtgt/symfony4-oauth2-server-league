@@ -1,14 +1,35 @@
 <?php
-namespace App\Infrastructure\oAuth2Server\Bridge;
+namespace App\Infrastructure\OAuth2Server\Bridge;
 
 use League\OAuth2\Server\Entities\RefreshTokenEntityInterface;
+use League\OAuth2\Server\Repositories\AccessTokenRepositoryInterface;
 use League\OAuth2\Server\Repositories\RefreshTokenRepositoryInterface;
 use App\Domain\Repository\RefreshTokenRepositoryInterface as AppRefreshTokenRepositoryInterface;
 use App\Domain\Model\RefreshToken as AppRefreshToken;
 
 final class RefreshTokenRepository implements RefreshTokenRepositoryInterface
 {
+  /**
+   * @var AppRefreshTokenRepositoryInterface
+   */
+    protected $appRefreshTokenRepository;
+
     /**
+     * @var AccessTokenRepositoryInterface
+     */
+    protected $accessTokenRepository;
+
+  /**
+   * RefreshTokenRepository constructor.
+   *
+   * @param AppRefreshTokenRepositoryInterface $appRefreshTokenRepository
+   */
+  public function __construct(AppRefreshTokenRepositoryInterface $appRefreshTokenRepository) {
+      $this->appRefreshTokenRepository = $appRefreshTokenRepository;
+  }
+
+
+  /**
      * {@inheritdoc}
      */
     public function getNewRefreshToken(): RefreshTokenEntityInterface

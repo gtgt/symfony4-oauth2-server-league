@@ -52,7 +52,16 @@
         ],
         "post-update-cmd": [
             "@auto-scripts"
-        ]
+        ],
+      "build": [
+        "docker-compose -f build/container/dev/docker-compose.yml build --no-cache"
+      ],
+      "start": [
+        "docker-compose -f build/container/dev/docker-compose.yml up -d"
+      ],
+      "stop": [
+        "docker-compose -f build/container/dev/docker-compose.yml down"
+      ]
     },
     "conflict": {
         "symfony/symfony": "*"
@@ -60,7 +69,7 @@
     "extra": {
         "symfony": {
             "allow-contrib": false,
-            "require": "4.1.*"
+            "require": "4.4.*"
         }
     }
 }

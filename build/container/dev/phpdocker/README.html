@@ -1,4 +1,4 @@
-<html>
+<html lang="en">
 <head>
     <title>PHPDocker.io Readme</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
@@ -23,7 +23,7 @@
 
 <p>Simply, unzip the file into your project, this will create <code>docker-compose.yml</code> on the root of your project and a folder named <code>phpdocker</code> containing nginx and php-fpm config for it.</p>
 
-<p>Ensure the webserver config on <code>docker\nginx.conf</code> is correct for your project. PHPDocker.io will have customised this file according to the application type you chose on the generator, for instance <code>web/app|app_dev.php</code> on a Symfony project, or <code>public/index.php</code> on generic apps.</p>
+<p>Ensure the webserver config on <code>phpdocker/nginx/nginx.conf</code> is correct for your project. PHPDocker.io will have customised this file according to the application type you chose on the generator, for instance <code>web/app|app_dev.php</code> on a Symfony project, or <code>public/index.php</code> on generic apps.</p>
 
 <p>Note: you may place the files elsewhere in your project. Make sure you modify the locations for the php-fpm dockerfile, the php.ini overrides and nginx config on <code>docker-compose.yml</code> if you do so.</p>
 
@@ -52,11 +52,15 @@
 <tbody>
 <tr>
   <td>Webserver</td>
-  <td><a href="http://localhost:8080">localhost:8080</a></td>
+  <td><a href="http://localhost:8088">localhost:8088</a></td>
 </tr>
 <tr>
-  <td>MySQL</td>
-  <td><strong>host:</strong> <code>localhost</code>; <strong>port:</strong> <code>8082</code></td>
+  <td>Mailhog web interface</td>
+  <td><a href="http://localhost:8089">localhost:8089</a></td>
+</tr>
+<tr>
+  <td>MariaDB</td>
+  <td><strong>host:</strong> <code>localhost</code>; <strong>port:</strong> <code>8091</code></td>
 </tr>
 </tbody>
 </table>
@@ -80,19 +84,19 @@
   <td>9000</td>
 </tr>
 <tr>
-  <td>MySQL</td>
-  <td>mysql</td>
+  <td>MariaDB</td>
+  <td>mariadb</td>
   <td>3306 (default)</td>
-</tr>
-<tr>
-  <td>Memcached</td>
-  <td>memcached</td>
-  <td>11211 (default)</td>
 </tr>
 <tr>
   <td>Redis</td>
   <td>redis</td>
   <td>6379 (default)</td>
+</tr>
+<tr>
+  <td>SMTP (Mailhog)</td>
+  <td>mailhog</td>
+  <td>1025 (default)</td>
 </tr>
 </tbody>
 </table>

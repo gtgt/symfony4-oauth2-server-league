@@ -1,0 +1,9 @@
+#!/bin/bash
+if [[ -x `which realpath` ]]; then
+  T=$(realpath ${BASH_SOURCE[0]:=${0}})
+else
+  T=${BASH_SOURCE[0]:=${0}}
+fi
+D=$(dirname ${T})
+echo $@
+docker-compose -f $D/../build/container/dev/docker-compose.yml exec php-fpm bin/console $@

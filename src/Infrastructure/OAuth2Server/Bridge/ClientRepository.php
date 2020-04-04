@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Infrastructure\oAuth2Server\Bridge;
+namespace App\Infrastructure\OAuth2Server\Bridge;
 
 use App\Domain\Repository\ClientRepositoryInterface as AppClientRepositoryInterface;
 use League\OAuth2\Server\Entities\ClientEntityInterface;

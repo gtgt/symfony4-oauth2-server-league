@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Infrastructure\oAuth2Server\Bridge;
+namespace App\Infrastructure\OAuth2Server\Bridge;
 
 use League\OAuth2\Server\Entities\ClientEntityInterface;
 use League\OAuth2\Server\Entities\UserEntityInterface;
@@ -52,7 +52,6 @@ final class UserRepository implements UserRepositoryInterface
             return null;
         }
 
-        $oAuthUser = new User($appUser->getId()->toString());
-        return $oAuthUser;
+        return new User($appUser->getId()->toString());
     }
 }

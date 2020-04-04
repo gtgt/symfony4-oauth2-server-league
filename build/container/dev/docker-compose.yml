@@ -4,45 +4,45 @@
 version: "3.1"
 services:
 
-    memcached:
-      image: memcached:alpine
-      container_name: symfony-oauth2-server-memcached
+    mailhog:
+      image: mailhog/mailhog:latest
+      container_name: oauth2-mailhog
+      ports:
+        - "8089:8025"
 
     redis:
       image: redis:alpine
-      container_name: symfony-oauth2-server-redis
+      container_name: oauth2-redis
 
-    mysql:
-      image: mysql:5.7
-      container_name: symfony-oauth2-server-mysql
+    mariadb:
+      image: mariadb:10.4
+      container_name: oauth2-mariadb
       working_dir: /application
       volumes:
         - ../../../:/application
       environment:
         - MYSQL_ROOT_PASSWORD=root
-        - MYSQL_DATABASE=symfony
+        - MYSQL_DATABASE=oauth2
         - MYSQL_USER=symfony
         - MYSQL_PASSWORD=symfony
       ports:
-        - "8082:3306"
+        - "8091:3306"
 
     webserver:
       image: nginx:alpine
-      container_name: symfony-oauth2-server-webserver
+      container_name: oauth2-webserver
       working_dir: /application
       volumes:
           - ../../../:/application
           - ./phpdocker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
       ports:
-       - "8080:80"
+       - "8088:80"
 
     php-fpm:
       build: phpdocker/php-fpm
-      environment:
-        PHP_IDE_CONFIG: "serverName=my.docker"
-      container_name: symfony-oauth2-server-php-fpm
+      container_name: oauth2-php-fpm
       working_dir: /application
       volumes:
         - ../../../:/application
-        - ./phpdocker/php-fpm/php-ini-overrides.ini:/etc/php/7.2/fpm/conf.d/99-overrides.ini
+        - ./phpdocker/php-fpm/php-ini-overrides.ini:/etc/php/7.4/fpm/conf.d/99-overrides.ini
 

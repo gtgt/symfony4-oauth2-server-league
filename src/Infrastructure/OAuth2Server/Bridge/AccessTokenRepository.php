@@ -1,5 +1,5 @@
 <?php
-namespace App\Infrastructure\oAuth2Server\Bridge;
+namespace App\Infrastructure\OAuth2Server\Bridge;
 
 use App\Domain\Repository\AccessTokenRepositoryInterface as AppAccessTokenRepositoryInterface;
 use App\Domain\Model\AccessToken as AppAccessToken;
@@ -51,7 +51,7 @@ final class AccessTokenRepository implements AccessTokenRepositoryInterface
 
     private function scopesToArray(array $scopes): array
     {
-        return array_map(function ($scope) {
+        return array_map(static function (Scope $scope) {
             return $scope->getIdentifier();
         }, $scopes);
     }
