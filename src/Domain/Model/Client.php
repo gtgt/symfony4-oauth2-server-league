@@ -44,13 +44,14 @@ class Client
 
     public static function create(string $name): Client
     {
+        /** @noinspection PhpUnhandledExceptionInspection */
         $clientId = ClientId::fromString(Uuid::uuid4()->toString());
         return new self($clientId, $name);
     }
 
-    public function getId(): UserId
+    public function getId(): ClientId
     {
-        return UserId::fromString($this->id);
+        return ClientId::fromString($this->id);
     }
 
     /**

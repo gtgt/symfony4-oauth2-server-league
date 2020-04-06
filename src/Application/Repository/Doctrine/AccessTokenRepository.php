@@ -19,7 +19,7 @@ final class AccessTokenRepository implements AccessTokenRepositoryInterface
     /**
      * @var ObjectRepository
      */
-    private $objectRepository;
+    private $entityRepository;
 
     /**
      * UserRepository constructor.
@@ -29,12 +29,13 @@ final class AccessTokenRepository implements AccessTokenRepositoryInterface
         EntityManagerInterface $entityManager
     ) {
         $this->entityManager = $entityManager;
-        $this->objectRepository = $this->entityManager->getRepository(self::ENTITY);
+        $this->entityRepository = $this->entityManager->getRepository(self::ENTITY);
     }
 
     public function find(string $accessTokenId): ?AccessToken
     {
-       return $this->entityManager->find(self::ENTITY, $accessTokenId);
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
+        return $this->entityRepository->find($accessTokenId);
     }
 
     public function save(AccessToken $accessToken): void

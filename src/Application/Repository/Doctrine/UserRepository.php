@@ -19,7 +19,7 @@ final class UserRepository implements UserRepositoryInterface
     /**
      * @var ObjectRepository
      */
-    private $objectRepository;
+    private $entityRepository;
 
     /**
      * UserRepository constructor.
@@ -29,17 +29,18 @@ final class UserRepository implements UserRepositoryInterface
        EntityManagerInterface $entityManager
     ) {
         $this->entityManager = $entityManager;
-        $this->objectRepository = $this->entityManager->getRepository(self::ENTITY);
+        $this->entityRepository = $this->entityManager->getRepository(self::ENTITY);
     }
 
     public function find(UuidInterface $id): ?User
     {
-        $this->entityManager->find(self::ENTITY, $id->toString());
+        return $this->entityManager->find(self::ENTITY, $id->toString());
     }
 
     public function findOneByEmail(string $username): ?User
     {
-        return $this->objectRepository->findOneBy(['email' => $username]);
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
+        return $this->entityRepository->findOneBy(['email' => $username]);
     }
 
     public function save(User $user): void

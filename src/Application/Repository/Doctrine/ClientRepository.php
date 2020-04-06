@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Application\Repository\Doctrine;
 
 use App\Domain\Model\Client;
@@ -18,25 +19,27 @@ final class ClientRepository implements ClientRepositoryInterface
     /**
      * @var ObjectRepository
      */
-    private $objectRepository;
+    private $entityRepository;
 
     /**
      * UserRepository constructor.
+     *
      * @param EntityManagerInterface $entityManager
      */
-    public function __construct(
-       EntityManagerInterface $entityManager
-    ) {
+    public function __construct(EntityManagerInterface $entityManager)
+    {
         $this->entityManager = $entityManager;
-        $this->objectRepository = $this->entityManager->getRepository(self::ENTITY);
+        $this->entityRepository = $this->entityManager->getRepository(self::ENTITY);
     }
 
     /**
      * @param string $clientId
+     *
      * @return Client|null
      */
     public function findActive(string $clientId): ?Client
     {
-        return $this->objectRepository->findOneBy(['id' => $clientId, 'active' => true]);
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
+        return $this->entityRepository->findOneBy(['id' => $clientId, 'active' => true]);
     }
 }

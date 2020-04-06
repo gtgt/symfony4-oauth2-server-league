@@ -2,14 +2,14 @@
 
 namespace App\Application\Repository\Doctrine;
 
-use App\Domain\Model\RefreshToken;
-use App\Domain\Repository\RefreshTokenRepositoryInterface;
-use Doctrine\Common\Persistence\ObjectRepository;
+use App\Domain\Model\AuthCode;
+use App\Domain\Repository\AuthCodeRepositoryInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ObjectRepository;
 
-final class RefreshTokenRepository implements RefreshTokenRepositoryInterface
+final class AuthCodeRepository implements AuthCodeRepositoryInterface
 {
-    private const ENTITY = RefreshToken::class;
+    private const ENTITY = AuthCode::class;
 
     /**
      * @var EntityManagerInterface
@@ -32,13 +32,13 @@ final class RefreshTokenRepository implements RefreshTokenRepositoryInterface
         $this->entityRepository = $this->entityManager->getRepository(self::ENTITY);
     }
 
-    public function find(string $accessTokenId): ?RefreshToken
+    public function find(string $accessTokenId): ?AuthCode
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
         return $this->entityRepository->find($accessTokenId);
     }
 
-    public function save(RefreshToken $accessToken): void
+    public function save(AuthCode $accessToken): void
     {
         $this->entityManager->persist($accessToken);
         $this->entityManager->flush();

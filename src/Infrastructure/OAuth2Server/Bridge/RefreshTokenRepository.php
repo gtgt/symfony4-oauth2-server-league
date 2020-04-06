@@ -19,13 +19,15 @@ final class RefreshTokenRepository implements RefreshTokenRepositoryInterface
      */
     protected $accessTokenRepository;
 
-  /**
-   * RefreshTokenRepository constructor.
-   *
-   * @param AppRefreshTokenRepositoryInterface $appRefreshTokenRepository
-   */
-  public function __construct(AppRefreshTokenRepositoryInterface $appRefreshTokenRepository) {
+    /**
+     * RefreshTokenRepository constructor.
+     *
+     * @param AppRefreshTokenRepositoryInterface $appRefreshTokenRepository
+     * @param AccessTokenRepositoryInterface $accessTokenRepository
+     */
+  public function __construct(AppRefreshTokenRepositoryInterface $appRefreshTokenRepository, AccessTokenRepositoryInterface $accessTokenRepository) {
       $this->appRefreshTokenRepository = $appRefreshTokenRepository;
+      $this->accessTokenRepository = $accessTokenRepository;
   }
 
 

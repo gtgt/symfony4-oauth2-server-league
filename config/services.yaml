@@ -42,7 +42,28 @@ services:
             $userRepository: '@App\Infrastructure\OAuth2Server\Bridge\UserRepository'
             $refreshTokenRepository: '@App\Infrastructure\OAuth2Server\Bridge\RefreshTokenRepository'
 
+    authCodeTTL:
+        class: DateInterval
+        public: false
+        arguments:
+            - 'PT1H'
+
+    League\OAuth2\Server\Grant\AuthCodeGrant:
+        arguments:
+            $authCodeRepository: '@App\Infrastructure\OAuth2Server\Bridge\AuthCodeRepository'
+            $refreshTokenRepository: '@App\Infrastructure\OAuth2Server\Bridge\RefreshTokenRepository'
+            $authCodeTTL: '@authCodeTTL'
+
+    League\OAuth2\Server\Grant\RefreshTokenGrant:
+        arguments:
+            $refreshTokenRepository: '@App\Infrastructure\OAuth2Server\Bridge\RefreshTokenRepository'
+
     League\OAuth2\Server\ResourceServer:
         arguments:
             $accessTokenRepository: '@App\Infrastructure\OAuth2Server\Bridge\AccessTokenRepository'
             $publicKey: '%env(resolve:OAUTH2_PUBLIC_KEY)%'
+
+    League\OAuth2\Server\Repositories\ClientRepositoryInterface: '@App\Infrastructure\OAuth2Server\Bridge\ClientRepository'
+    League\OAuth2\Server\Repositories\AuthCodeRepositoryInterface: '@App\Infrastructure\OAuth2Server\Bridge\AuthCodeRepository'
+    League\OAuth2\Server\Repositories\AccessTokenRepositoryInterface: '@App\Infrastructure\OAuth2Server\Bridge\AccessTokenRepository'
+    League\OAuth2\Server\Repositories\RefreshTokenRepositoryInterface: '@App\Infrastructure\OAuth2Server\Bridge\RefreshTokenRepository'

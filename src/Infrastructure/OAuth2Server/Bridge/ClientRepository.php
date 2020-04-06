@@ -5,6 +5,7 @@ namespace App\Infrastructure\OAuth2Server\Bridge;
 use App\Domain\Repository\ClientRepositoryInterface as AppClientRepositoryInterface;
 use League\OAuth2\Server\Entities\ClientEntityInterface;
 use League\OAuth2\Server\Repositories\ClientRepositoryInterface;
+use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 
 final class ClientRepository implements ClientRepositoryInterface
 {
@@ -14,12 +15,18 @@ final class ClientRepository implements ClientRepositoryInterface
     private $appClientRepository;
 
     /**
-     * ClientRepository constructor.
-     * @param AppClientRepositoryInterface $clientRepository
+     * @var EncoderFactoryInterface
      */
-    public function __construct(AppClientRepositoryInterface $appClientRepository)
+    private $encoderFactory;
+
+    /**
+     * ClientRepository constructor.
+     * @param AppClientRepositoryInterface $appClientRepository
+     */
+    public function __construct(AppClientRepositoryInterface $appClientRepository, EncoderFactoryInterface $encoderFactory)
     {
         $this->appClientRepository = $appClientRepository;
+        $this->encoderFactory = $encoderFactory;
     }
 
     /**
@@ -36,11 +43,12 @@ final class ClientRepository implements ClientRepositoryInterface
             return null;
         }
 
-        if ($mustValidateSecret && !hash_equals($appClient->getSecret(), (string)$clientSecret)) {
+        $encoder = $this->encoderFactory->getEncoder($appClient);
+
+        if ($mustValidateSecret && !$encoder->isPasswordValid($appClient->getSecret(), $clientSecret, null)) {
             return null;
         }
 
-        $oauthClient = new Client($clientIdentifier, $appClient->getName(), $appClient->getRedirect());
-        return $oauthClient;
+        return new Client($clientIdentifier, $appClient->getName(), $appClient->getRedirect());
     }
 }
