@@ -17,16 +17,15 @@ services:
     mariadb:
       image: mariadb:10.4
       container_name: oauth2-mariadb
-      working_dir: /application
       volumes:
-        - ../../../:/application
+        - db_data:/var/lib/mysql
       environment:
         - MYSQL_ROOT_PASSWORD=root
         - MYSQL_DATABASE=oauth2
         - MYSQL_USER=symfony
         - MYSQL_PASSWORD=symfony
       ports:
-        - "8091:3306"
+        - "3308:3306"
 
     webserver:
       image: nginx:alpine
@@ -46,3 +45,5 @@ services:
         - ../../../:/application
         - ./phpdocker/php-fpm/php-ini-overrides.ini:/etc/php/7.4/fpm/conf.d/99-overrides.ini
         - ./phpdocker/php-fpm/php-fpm-conf-overrides.ini:/etc/php/7.4/fpm/pool.d/z-overrides.conf
+volumes:
+    db_data: ~

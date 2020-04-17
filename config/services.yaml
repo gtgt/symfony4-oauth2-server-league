@@ -37,22 +37,31 @@ services:
             $privateKey: '%env(resolve:OAUTH2_PRIVATE_KEY)%'
             $encryptionKey: '%env(OAUTH2_ENCRYPTION_KEY)%'
 
-    League\OAuth2\Server\Grant\PasswordGrant:
-        arguments:
-            $userRepository: '@App\Infrastructure\OAuth2Server\Bridge\UserRepository'
-            $refreshTokenRepository: '@App\Infrastructure\OAuth2Server\Bridge\RefreshTokenRepository'
-
     authCodeTTL:
         class: DateInterval
         public: false
         arguments:
             - 'PT1H'
+    refreshTokenTTL:
+        class: DateInterval
+        public: false
+        arguments:
+            - 'P1M'
+
+    League\OAuth2\Server\Grant\ClientCredentialsGrant: ~
 
     League\OAuth2\Server\Grant\AuthCodeGrant:
         arguments:
             $authCodeRepository: '@App\Infrastructure\OAuth2Server\Bridge\AuthCodeRepository'
             $refreshTokenRepository: '@App\Infrastructure\OAuth2Server\Bridge\RefreshTokenRepository'
             $authCodeTTL: '@authCodeTTL'
+
+    League\OAuth2\Server\Grant\PasswordGrant:
+        arguments:
+            $userRepository: '@App\Infrastructure\OAuth2Server\Bridge\UserRepository'
+            $refreshTokenRepository: '@App\Infrastructure\OAuth2Server\Bridge\RefreshTokenRepository'
+        calls:
+            - [ 'setRefreshTokenTTL', ['@refreshTokenTTL'] ]
 
     League\OAuth2\Server\Grant\RefreshTokenGrant:
         arguments:

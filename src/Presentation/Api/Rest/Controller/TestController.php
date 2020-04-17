@@ -17,7 +17,7 @@ final class TestController implements TokenAuthenticatedController
      * @param Request $request
      * @return Response
      */
-    public function getTest(Request $request): Response
+    public function testAction(Request $request): Response
     {
         $id = $request->get('oauth_user_id');
         return new JsonResponse($id, Response::HTTP_OK);

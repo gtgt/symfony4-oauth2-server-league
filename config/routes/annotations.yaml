@@ -2,3 +2,7 @@ api_rest:
     resource: ../../src/Presentation/Api/Rest/Controller/
     type: annotation
     prefix: /api
+main:
+    resource: ../../src/Application/Controller/
+    type: annotation
+    prefix: /
